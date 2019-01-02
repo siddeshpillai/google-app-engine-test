@@ -17,7 +17,7 @@
 import webapp2
 
 form="""
-<form action="https://google.com/search">
+<form action="/testform">
     <input name="q">
     <input type="submit">
 </form>
@@ -27,6 +27,9 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write(form)
 
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+class TestHandler(webapp2.RequestHandler):
+    def get(self):
+        q = self.request.get("q")
+        self.response.write(q)
+
+app = webapp2.WSGIApplication([('/', MainHandler), ('/testform', TestHandler)], debug=True)
